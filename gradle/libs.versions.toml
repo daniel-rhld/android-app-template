@@ -10,8 +10,9 @@ lifecycleRuntimeKtx = "2.8.0"
 activityCompose = "1.9.0"
 composeBom = "2024.05.00"
 hilt = "2.49"
+hiltViewModel = "1.2.0"
 room = "2.6.1"
-destinations = "1.0.0"
+destinations = "2.1.0-beta07"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -21,22 +22,21 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-ui-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-ui-core = { group = "androidx.compose.ui", name = "ui" }
-androidx-ui-icons = { group = "androidx.compose.ui", name = "material-icons-core" }
-androidx-ui-iconsExtended = { group = "androidx.compose.ui", name = "material-icons-extended" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 
-hilt-core = { group = "com.google.dagger", name="hilt-android", version.ref="hilt" }
-hilt-compiler = { group = "com.google.dagger", name="hilt-compiler", version.ref="hilt" }
+hilt-core = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-viewmodel = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltViewModel" }
 
-room-runtime = { group="androidx.room", name="room-runtime", version.ref="room" }
-room-ktx = { group="androidx.room", name="room-ktx", version.ref="room" }
-room-compiler = { group="androidx.room", name="room-compiler", version.ref="room" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
-destinations-core = { group = "io.github.raamcosta.compose-destinations", name = "core", version.ref="destinations" }
-destinations-bottomSheet = { group = "io.github.raamcosta.compose-destinations", name = "bottom-sheet", version.ref="destinations" }
-destinations-compiler = { group = "io.github.raamcosta.compose-destinations", name = "ktx", version.ref="destinations" }
+destinations-core = { group = "io.github.raamcosta.compose-destinations", name = "core", version.ref = "destinations" }
+destinations-bottomSheet = { group = "io.github.raamcosta.compose-destinations", name = "bottom-sheet", version.ref = "destinations" }
+destinations-compiler = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "destinations" }
 
 test-junit-core = { group = "junit", name = "junit", version.ref = "junit" }
 test-junit-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -44,7 +44,8 @@ test-junit-ui = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 [plugins]
-ksp = { id="com.google.devtools.ksp", version.ref="ksp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-hilt = { id = "com.google.devtools.ksp", version.ref="ksp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+

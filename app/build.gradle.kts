@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.ksp)
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.hilt)
@@ -49,7 +50,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
 
     packaging {
@@ -67,14 +68,13 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui.material3)
     implementation(libs.androidx.ui.core)
-    implementation(libs.androidx.ui.icons)
-    implementation(libs.androidx.ui.iconsExtended)
     implementation(libs.androidx.ui.core)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
 
     implementation(libs.hilt.core)
+    implementation(libs.hilt.viewmodel)
     ksp(libs.hilt.compiler)
 
     implementation(libs.room.runtime)

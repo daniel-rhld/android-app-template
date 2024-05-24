@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">ShoppingList</string>
+
+    <plurals name="shopping_list_component_label_item_count">
+        <item quantity="one">1 item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+
+    <string name="shopping_list_toolbar_title">Shopping lists</string>
+    <string name="shopping_list_empty_label">You haven\'t created any shopping lists yet</string>
+    <string name="shopping_list_empty_button_label">Create shopping list</string>
+
+    <string name="add_shopping_list_title">Add shopping list</string>
+    <string name="add_shopping_list_text_field_name_label">Name</string>
+    <string name="add_shopping_list_button_create_label">Create</string>
+
 </resources>
