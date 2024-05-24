@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases.CreateShoppingListUseCase
+import de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases.GetShoppingListsUseCase
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list.AddShoppingListUiEvent
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list.AddShoppingListUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ShoppingListViewModel @Inject constructor(
+    private val getShoppingListsUseCase: GetShoppingListsUseCase,
     private val createShoppingListUseCase: CreateShoppingListUseCase
 ) : ViewModel() {
 
@@ -38,6 +40,16 @@ class ShoppingListViewModel @Inject constructor(
                         addShoppingListUiState = uiState.addShoppingListUiState.copy(
                             buttonSaveEnabled = uiState.addShoppingListUiState.shoppingListName.isNotBlank()
                         )
+                    )
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            getShoppingListsUseCase().collectLatest { shoppingLists ->
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        shoppingLists = shoppingLists
                     )
                 }
             }

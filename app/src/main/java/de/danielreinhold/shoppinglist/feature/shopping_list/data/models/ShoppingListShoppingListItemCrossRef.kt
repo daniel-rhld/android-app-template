@@ -3,7 +3,6 @@ package de.danielreinhold.shoppinglist.feature.shopping_list.data.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingList
 
 @Entity(
     tableName = "shopping_list_shopping_list_item",
