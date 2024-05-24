@@ -1,8 +1,9 @@
-package de.danielreinhold.shoppinglist.feature.shopping_list.data.shopping_list_item
+package de.danielreinhold.shoppinglist.feature.shopping_list.data.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingListItem
 
 @Entity(tableName = "shopping_list_items")
 data class ShoppingListItemEntity(

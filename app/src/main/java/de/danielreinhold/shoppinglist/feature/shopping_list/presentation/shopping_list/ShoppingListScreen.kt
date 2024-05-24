@@ -33,7 +33,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import de.danielreinhold.shoppinglist.R
 import de.danielreinhold.shoppinglist.core.presentation.theme.AppTheme
-import de.danielreinhold.shoppinglist.feature.shopping_list.data.shopping_list.ShoppingListMockItem
+import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingListMockItem
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list.AddShoppingListScreen
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list.AddShoppingListUiState
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.shopping_list.components.EmptyShoppingListComponent

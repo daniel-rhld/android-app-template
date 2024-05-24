@@ -1,4 +1,4 @@
-package de.danielreinhold.shoppinglist.feature.shopping_list.data.shopping_list_item
+package de.danielreinhold.shoppinglist.feature.shopping_list.domain.models
 
 data class ShoppingListItem(
     val id: Int,

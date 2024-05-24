@@ -2,6 +2,8 @@ package de.danielreinhold.shoppinglist.feature.shopping_list.presentation.shoppi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases.CreateShoppingListUseCase
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list.AddShoppingListUiEvent
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list.AddShoppingListUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,8 +11,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ShoppingListViewModel : ViewModel() {
+@HiltViewModel
+class ShoppingListViewModel @Inject constructor(
+    private val createShoppingListUseCase: CreateShoppingListUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
         value = ShoppingListUiState(
@@ -68,7 +74,20 @@ class ShoppingListViewModel : ViewModel() {
                         }
                     }
                     is AddShoppingListUiEvent.ButtonSaveClick -> {
-                        // TODO: Save
+                        viewModelScope.launch {
+                            try {
+                                createShoppingListUseCase(
+                                    name = uiState.value.addShoppingListUiState.shoppingListName
+                                )
+                                _uiState.update { uiState ->
+                                    uiState.copy(
+                                        addShoppingListDialogVisible = false
+                                    )
+                                }
+                            } catch (e: Exception) {
+                                // TODO: Show error message
+                            }
+                        }
                     }
                 }
             }

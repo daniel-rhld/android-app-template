@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.danielreinhold.shoppinglist.R
 import de.danielreinhold.shoppinglist.core.presentation.theme.AppTheme
-import de.danielreinhold.shoppinglist.feature.shopping_list.data.shopping_list.ShoppingList
-import de.danielreinhold.shoppinglist.feature.shopping_list.data.shopping_list.ShoppingListMockItem
+import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingList
+import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingListMockItem
 
 @Composable
 fun ShoppingListComponent(
