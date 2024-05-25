@@ -85,86 +85,15 @@ class ShoppingListViewModel @Inject constructor(
 
     fun onUiEvent(event: ShoppingListUiEvent) {
         when (event) {
-            is ShoppingListUiEvent.AddShoppingList -> {
+
+            // <editor-fold desc="Add shopping list dialog events" defaultstate="collapsed">
+
+            is ShoppingListUiEvent.ShowAddShoppingListDialog -> {
                _uiState.update {
                    it.copy(
                        addShoppingListDialogVisible = true
                    )
                }
-            }
-
-            is ShoppingListUiEvent.CloseAddShoppingListDialog -> {
-                _uiState.update { uiState ->
-                    uiState.copy(
-                        addShoppingListDialogVisible = false
-                    )
-                }
-            }
-
-            is ShoppingListUiEvent.CloseEditShoppingListDialog -> {
-                _uiState.update { uiState ->
-                    uiState.copy(
-                        editShoppingListDialogVisible = false,
-                        contextualShoppingList = null
-                    )
-                }
-            }
-
-            is ShoppingListUiEvent.ShowShoppingListContextMenu -> {
-                _uiState.update {
-                    it.copy(
-                        contextualShoppingList = event.shoppingList
-                    )
-                }
-            }
-
-            is ShoppingListUiEvent.CloseShoppingListContextMenu -> {
-                _uiState.update {
-                    it.copy(
-                        contextualShoppingList = null
-                    )
-                }
-            }
-
-            is ShoppingListUiEvent.EditShoppingList -> {
-                _uiState.update { uiState ->
-                    uiState.copy(
-                        editShoppingListDialogVisible = true,
-                        editShoppingListUiState = uiState.editShoppingListUiState.copy(
-                            shoppingListId = event.shoppingList.id,
-                            shoppingListName = event.shoppingList.name
-                        )
-                    )
-                }
-            }
-
-            is ShoppingListUiEvent.ShowConfirmDeleteShoppingListDialog -> {
-                _uiState.update {
-                    it.copy(
-                        deleteShoppingListConfirmationDialogVisible = true
-                    )
-                }
-            }
-
-            is ShoppingListUiEvent.DismissConfirmDeleteShoppingListDialog -> {
-                _uiState.update {
-                    it.copy(
-                        deleteShoppingListConfirmationDialogVisible = false
-                    )
-                }
-            }
-
-            is ShoppingListUiEvent.DeleteShoppingList -> {
-                viewModelScope.launch {
-                    deleteShoppingListUseCase.invoke(event.shoppingList)
-
-                    _uiState.update {
-                        it.copy(
-                            contextualShoppingList = null,
-                            deleteShoppingListConfirmationDialogVisible = false
-                        )
-                    }
-                }
             }
 
             is ShoppingListUiEvent.AddShoppingListDialogInteraction -> {
@@ -197,6 +126,30 @@ class ShoppingListViewModel @Inject constructor(
                             }
                         }
                     }
+                }
+            }
+
+            is ShoppingListUiEvent.CloseAddShoppingListDialog -> {
+                _uiState.update {
+                    it.copy(
+                        addShoppingListDialogVisible = false
+                    )
+                }
+            }
+
+            // </editor-fold>
+
+            // <editor-fold desc="Edit shopping list dialog events" defaultstate="collapsed">
+
+            is ShoppingListUiEvent.ShowEditShoppingListDialog -> {
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        editShoppingListDialogVisible = true,
+                        editShoppingListUiState = uiState.editShoppingListUiState.copy(
+                            shoppingListId = event.shoppingList.id,
+                            shoppingListName = event.shoppingList.name
+                        )
+                    )
                 }
             }
 
@@ -237,6 +190,70 @@ class ShoppingListViewModel @Inject constructor(
                     }
                 }
             }
+
+            is ShoppingListUiEvent.CloseEditShoppingListDialog -> {
+                _uiState.update {
+                    it.copy(
+                        editShoppingListDialogVisible = false,
+                        contextualShoppingList = null
+                    )
+                }
+            }
+
+            // </editor-fold>
+
+            // <editor-fold desc="Delete shopping list events" defaultstate="collapsed">
+
+            is ShoppingListUiEvent.ShowConfirmDeleteShoppingListDialog -> {
+                _uiState.update {
+                    it.copy(
+                        deleteShoppingListConfirmationDialogVisible = true
+                    )
+                }
+            }
+
+            is ShoppingListUiEvent.CloseConfirmDeleteShoppingListDialog -> {
+                _uiState.update {
+                    it.copy(
+                        deleteShoppingListConfirmationDialogVisible = false
+                    )
+                }
+            }
+
+            is ShoppingListUiEvent.DeleteShoppingList -> {
+                viewModelScope.launch {
+                    deleteShoppingListUseCase.invoke(event.shoppingList)
+
+                    _uiState.update {
+                        it.copy(
+                            contextualShoppingList = null,
+                            deleteShoppingListConfirmationDialogVisible = false
+                        )
+                    }
+                }
+            }
+
+            // </editor-fold>
+
+            // <editor-fold desc="Shopping list context menu events" defaultstate="collapsed">
+
+            is ShoppingListUiEvent.ShowShoppingListContextMenu -> {
+                _uiState.update {
+                    it.copy(
+                        contextualShoppingList = event.shoppingList
+                    )
+                }
+            }
+
+            is ShoppingListUiEvent.CloseShoppingListContextMenu -> {
+                _uiState.update {
+                    it.copy(
+                        contextualShoppingList = null
+                    )
+                }
+            }
+
+            // </editor-fold>
 
             is ShoppingListUiEvent.ShowShoppingList -> {
 

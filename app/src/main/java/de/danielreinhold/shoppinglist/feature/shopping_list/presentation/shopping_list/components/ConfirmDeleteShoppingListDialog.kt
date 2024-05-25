@@ -14,13 +14,6 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import de.danielreinhold.shoppinglist.R
 import de.danielreinhold.shoppinglist.core.presentation.theme.AppTheme
 
-
-/*
-
-
-
- */
-
 @Composable
 fun ConfirmDeleteShoppingListDialog(
     onConfirm: () -> Unit,

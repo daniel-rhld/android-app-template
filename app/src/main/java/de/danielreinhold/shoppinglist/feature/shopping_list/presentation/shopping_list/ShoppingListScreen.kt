@@ -127,7 +127,7 @@ private fun ShoppingListScreen(
             },
             onDismissRequest = {
                 onUiEvent.invoke(
-                    ShoppingListUiEvent.DismissConfirmDeleteShoppingListDialog
+                    ShoppingListUiEvent.CloseConfirmDeleteShoppingListDialog
                 )
             }
         )
@@ -161,7 +161,7 @@ private fun ShoppingListScreen(
                                 onClick = {
                                     uiState.contextualShoppingList?.let { shoppingList ->
                                         onUiEvent.invoke(
-                                            ShoppingListUiEvent.EditShoppingList(shoppingList = shoppingList)
+                                            ShoppingListUiEvent.ShowEditShoppingListDialog(shoppingList = shoppingList)
                                         )
                                     }
                                 }
@@ -216,7 +216,7 @@ private fun ShoppingListScreen(
             if (uiState.shoppingLists.isNotEmpty()) {
                 FloatingActionButton(
                     onClick = {
-                        onUiEvent.invoke(ShoppingListUiEvent.AddShoppingList)
+                        onUiEvent.invoke(ShoppingListUiEvent.ShowAddShoppingListDialog)
                     }
                 ) {
                     Icon(
@@ -268,7 +268,7 @@ private fun ShoppingListScreen(
             ) {
                 EmptyShoppingListComponent(
                     onButtonAddShoppingListClick = {
-                        onUiEvent.invoke(ShoppingListUiEvent.AddShoppingList)
+                        onUiEvent.invoke(ShoppingListUiEvent.ShowAddShoppingListDialog)
                     },
                     modifier = Modifier.fillMaxWidth()
                 )
