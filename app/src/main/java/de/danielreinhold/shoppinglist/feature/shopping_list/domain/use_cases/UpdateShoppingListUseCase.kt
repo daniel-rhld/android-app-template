@@ -6,10 +6,6 @@ import de.danielreinhold.shoppinglist.feature.shopping_list.domain.repositories.
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.validator.ShoppingListValidator
 import javax.inject.Inject
 
-
-/**
- * UpdateShoppingListUseCase
- */
 class UpdateShoppingListUseCase @Inject constructor(
     private val shoppingListRepository: ShoppingListRepository
 ) {

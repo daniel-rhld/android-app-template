@@ -12,5 +12,7 @@ data class ShoppingListUiState(
     val editShoppingListDialogVisible: Boolean,
     val editShoppingListUiState: AddEditShoppingListUiState,
 
-    val contextualShoppingList: ShoppingList?
+    val contextualShoppingList: ShoppingList?,
+
+    val deleteShoppingListConfirmationDialogVisible: Boolean
 )

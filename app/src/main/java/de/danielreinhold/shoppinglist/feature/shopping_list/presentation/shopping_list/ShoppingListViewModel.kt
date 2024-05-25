@@ -41,7 +41,8 @@ class ShoppingListViewModel @Inject constructor(
                 shoppingListName = "",
                 buttonSaveEnabled = false
             ),
-            contextualShoppingList = null
+            contextualShoppingList = null,
+            deleteShoppingListConfirmationDialogVisible = false
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -137,13 +138,30 @@ class ShoppingListViewModel @Inject constructor(
                 }
             }
 
+            is ShoppingListUiEvent.ShowConfirmDeleteShoppingListDialog -> {
+                _uiState.update {
+                    it.copy(
+                        deleteShoppingListConfirmationDialogVisible = true
+                    )
+                }
+            }
+
+            is ShoppingListUiEvent.DismissConfirmDeleteShoppingListDialog -> {
+                _uiState.update {
+                    it.copy(
+                        deleteShoppingListConfirmationDialogVisible = false
+                    )
+                }
+            }
+
             is ShoppingListUiEvent.DeleteShoppingList -> {
                 viewModelScope.launch {
                     deleteShoppingListUseCase.invoke(event.shoppingList)
 
                     _uiState.update {
                         it.copy(
-                            contextualShoppingList = null
+                            contextualShoppingList = null,
+                            deleteShoppingListConfirmationDialogVisible = false
                         )
                     }
                 }

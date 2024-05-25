@@ -5,10 +5,6 @@ import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.toEnti
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.repositories.ShoppingListRepository
 import javax.inject.Inject
 
-
-/**
- * DeleteShoppingListUseCase
- */
 class DeleteShoppingListUseCase @Inject constructor(
     private val shoppingListRepository: ShoppingListRepository
 ) {

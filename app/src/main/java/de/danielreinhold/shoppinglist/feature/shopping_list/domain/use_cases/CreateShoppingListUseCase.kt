@@ -1,7 +1,6 @@
 package de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases
 
 import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.ShoppingListEntity
-import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingListNameMissingException
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.repositories.ShoppingListRepository
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.validator.ShoppingListValidator
 

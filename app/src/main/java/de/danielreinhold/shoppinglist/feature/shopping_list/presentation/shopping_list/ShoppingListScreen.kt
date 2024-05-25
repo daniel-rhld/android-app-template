@@ -48,6 +48,7 @@ import de.danielreinhold.shoppinglist.core.presentation.theme.AppTheme
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingListMockItem
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_edit_shopping_list.AddEditShoppingListScreen
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_edit_shopping_list.AddEditShoppingListUiState
+import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.shopping_list.components.ConfirmDeleteShoppingListDialog
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.shopping_list.components.EmptyShoppingListComponent
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.shopping_list.components.ShoppingListComponent
 
@@ -115,6 +116,23 @@ private fun ShoppingListScreen(
         }
     }
 
+    if (uiState.deleteShoppingListConfirmationDialogVisible) {
+        ConfirmDeleteShoppingListDialog(
+            onConfirm = {
+                uiState.contextualShoppingList?.let { shoppingList ->
+                    onUiEvent.invoke(
+                        ShoppingListUiEvent.DeleteShoppingList(shoppingList = shoppingList)
+                    )
+                }
+            },
+            onDismissRequest = {
+                onUiEvent.invoke(
+                    ShoppingListUiEvent.DismissConfirmDeleteShoppingListDialog
+                )
+            }
+        )
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -156,11 +174,9 @@ private fun ShoppingListScreen(
 
                             IconButton(
                                 onClick = {
-                                    uiState.contextualShoppingList?.let { shoppingList ->
-                                        onUiEvent.invoke(
-                                            ShoppingListUiEvent.DeleteShoppingList(shoppingList = shoppingList)
-                                        )
-                                    }
+                                    onUiEvent.invoke(
+                                        ShoppingListUiEvent.ShowConfirmDeleteShoppingListDialog
+                                    )
                                 },
                                 colors = IconButtonDefaults.iconButtonColors(
                                     contentColor = MaterialTheme.colorScheme.error
@@ -235,7 +251,9 @@ private fun ShoppingListScreen(
                             )
                         },
                         selected = shoppingList.id == uiState.contextualShoppingList?.id,
-                        modifier = Modifier.fillMaxWidth().animateItem()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .animateItem()
                     )
                 }
             }
@@ -278,7 +296,8 @@ private fun PreviewShoppingListScreen() {
                     shoppingListName = "",
                     buttonSaveEnabled = false
                 ),
-                contextualShoppingList = ShoppingListMockItem
+                contextualShoppingList = ShoppingListMockItem,
+                deleteShoppingListConfirmationDialogVisible = false
             ),
             onUiEvent = {}
         )
@@ -304,7 +323,8 @@ private fun PreviewEmptyShoppingListScreen() {
                     shoppingListName = "",
                     buttonSaveEnabled = false
                 ),
-                contextualShoppingList = null
+                contextualShoppingList = null,
+                deleteShoppingListConfirmationDialogVisible = false
             ),
             onUiEvent = {}
         )

@@ -16,4 +16,9 @@
     <string name="add_edit_shopping_list_button_create_label">Create</string>
     <string name="add_edit_shopping_list_button_update_label">Update</string>
 
+    <string name="delete_shopping_list_confirmation_dialog_title">Delete shopping list</string>
+    <string name="delete_shopping_list_confirmation_dialog_text">Do you really want to delete this shopping list? It cannot be restored.</string>
+
+    <string name="confirmation_dialog_ok">Ok</string>
+    <string name="confirmation_dialog_cancel">Cancel</string>
 </resources>
