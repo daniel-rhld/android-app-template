@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
 
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui.material)
     implementation(libs.androidx.ui.material3)
     implementation(libs.androidx.ui.core)
     implementation(libs.androidx.ui.core)

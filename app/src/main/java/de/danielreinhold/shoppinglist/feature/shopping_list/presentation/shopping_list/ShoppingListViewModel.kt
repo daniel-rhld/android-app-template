@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases.CreateShoppingListUseCase
+import de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases.DeleteShoppingListUseCase
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases.GetShoppingListsUseCase
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list.AddShoppingListUiEvent
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list.AddShoppingListUiState
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ShoppingListViewModel @Inject constructor(
     private val getShoppingListsUseCase: GetShoppingListsUseCase,
-    private val createShoppingListUseCase: CreateShoppingListUseCase
+    private val createShoppingListUseCase: CreateShoppingListUseCase,
+    private val deleteShoppingListUseCase: DeleteShoppingListUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -27,7 +29,8 @@ class ShoppingListViewModel @Inject constructor(
             addShoppingListUiState = AddShoppingListUiState(
                 shoppingListName = "",
                 buttonSaveEnabled = false
-            )
+            ),
+            contextualShoppingList = null
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -46,7 +49,7 @@ class ShoppingListViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            getShoppingListsUseCase().collectLatest { shoppingLists ->
+            getShoppingListsUseCase.invoke().collectLatest { shoppingLists ->
                 _uiState.update { uiState ->
                     uiState.copy(
                         shoppingLists = shoppingLists
@@ -67,10 +70,42 @@ class ShoppingListViewModel @Inject constructor(
             }
 
             is ShoppingListUiEvent.CloseAddShoppingListDialog -> {
-                _uiState.update {
-                    it.copy(
+                _uiState.update { uiState ->
+                    uiState.copy(
                         addShoppingListDialogVisible = false
                     )
+                }
+            }
+
+            is ShoppingListUiEvent.ShowShoppingListContextMenu -> {
+                _uiState.update {
+                    it.copy(
+                        contextualShoppingList = event.shoppingList
+                    )
+                }
+            }
+
+            is ShoppingListUiEvent.CloseShoppingListContextMenu -> {
+                _uiState.update {
+                    it.copy(
+                        contextualShoppingList = null
+                    )
+                }
+            }
+
+            is ShoppingListUiEvent.EditShoppingList -> {
+
+            }
+
+            is ShoppingListUiEvent.DeleteShoppingList -> {
+                viewModelScope.launch {
+                    deleteShoppingListUseCase.invoke(event.shoppingList)
+
+                    _uiState.update {
+                        it.copy(
+                            contextualShoppingList = null
+                        )
+                    }
                 }
             }
 
@@ -88,12 +123,15 @@ class ShoppingListViewModel @Inject constructor(
                     is AddShoppingListUiEvent.ButtonSaveClick -> {
                         viewModelScope.launch {
                             try {
-                                createShoppingListUseCase(
+                                createShoppingListUseCase.invoke(
                                     name = uiState.value.addShoppingListUiState.shoppingListName
                                 )
                                 _uiState.update { uiState ->
                                     uiState.copy(
-                                        addShoppingListDialogVisible = false
+                                        addShoppingListDialogVisible = false,
+                                        addShoppingListUiState = uiState.addShoppingListUiState.copy(
+                                            shoppingListName = ""
+                                        )
                                     )
                                 }
                             } catch (e: Exception) {

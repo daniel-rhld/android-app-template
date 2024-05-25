@@ -1,19 +1,33 @@
 package de.danielreinhold.shoppinglist.feature.shopping_list.presentation.shopping_list
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -85,9 +99,80 @@ private fun ShoppingListScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.shopping_list_toolbar_title))
+                    AnimatedVisibility(
+                        visible = uiState.contextualShoppingList == null,
+                        enter = fadeIn() + expandHorizontally(),
+                        exit = fadeOut() + shrinkHorizontally()
+                    ) {
+                        Box(
+                            modifier = Modifier.height(40.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Text(text = stringResource(id = R.string.shopping_list_toolbar_title))
+                        }
+                    }
+
+                    AnimatedVisibility(
+                        visible = uiState.contextualShoppingList != null,
+                        enter = fadeIn() + expandHorizontally(),
+                        exit = fadeOut() + shrinkHorizontally()
+                    ) {
+                        Row {
+                            IconButton(
+                                onClick = {
+                                    uiState.contextualShoppingList?.let { shoppingList ->
+                                        onUiEvent.invoke(
+                                            ShoppingListUiEvent.EditShoppingList(shoppingList = shoppingList)
+                                        )
+                                    }
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Edit,
+                                    contentDescription = null
+                                )
+                            }
+
+                            IconButton(
+                                onClick = {
+                                    uiState.contextualShoppingList?.let { shoppingList ->
+                                        onUiEvent.invoke(
+                                            ShoppingListUiEvent.DeleteShoppingList(shoppingList = shoppingList)
+                                        )
+                                    }
+                                },
+                                colors = IconButtonDefaults.iconButtonColors(
+                                    contentColor = MaterialTheme.colorScheme.error
+                                )
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Delete,
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                    }
                 },
-                windowInsets = WindowInsets(top = 0.dp)
+                actions = {
+                    AnimatedVisibility(
+                        visible = uiState.contextualShoppingList != null,
+                        enter = fadeIn() + expandHorizontally(),
+                        exit = fadeOut() + shrinkHorizontally()
+                    ) {
+                        IconButton(
+                            onClick = {
+                                onUiEvent.invoke(
+                                    ShoppingListUiEvent.CloseShoppingListContextMenu
+                                )
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Close,
+                                contentDescription = null
+                            )
+                        }
+                    }
+                }
             )
         },
         floatingActionButton = {
@@ -123,7 +208,13 @@ private fun ShoppingListScreen(
                                 ShoppingListUiEvent.ShowShoppingList(shoppingList = shoppingList)
                             )
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        onLongClick = {
+                            onUiEvent.invoke(
+                                ShoppingListUiEvent.ShowShoppingListContextMenu(shoppingList = shoppingList)
+                            )
+                        },
+                        selected = shoppingList.id == uiState.contextualShoppingList?.id,
+                        modifier = Modifier.fillMaxWidth().animateItem()
                     )
                 }
             }
@@ -158,7 +249,8 @@ private fun PreviewShoppingListScreen() {
                 addShoppingListUiState = AddShoppingListUiState(
                     shoppingListName = "",
                     buttonSaveEnabled = false
-                )
+                ),
+                contextualShoppingList = ShoppingListMockItem
             ),
             onUiEvent = {}
         )
@@ -176,7 +268,8 @@ private fun PreviewEmptyShoppingListScreen() {
                 addShoppingListUiState = AddShoppingListUiState(
                     shoppingListName = "",
                     buttonSaveEnabled = false
-                )
+                ),
+                contextualShoppingList = null
             ),
             onUiEvent = {}
         )

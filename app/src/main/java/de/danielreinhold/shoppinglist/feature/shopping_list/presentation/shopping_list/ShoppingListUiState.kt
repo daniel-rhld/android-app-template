@@ -6,5 +6,6 @@ import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_sho
 data class ShoppingListUiState(
     val shoppingLists: List<ShoppingList>,
     val addShoppingListDialogVisible: Boolean,
-    val addShoppingListUiState: AddShoppingListUiState
+    val addShoppingListUiState: AddShoppingListUiState,
+    val contextualShoppingList: ShoppingList?
 )

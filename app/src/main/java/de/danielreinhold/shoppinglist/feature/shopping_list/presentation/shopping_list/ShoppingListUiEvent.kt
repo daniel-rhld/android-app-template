@@ -7,5 +7,9 @@ sealed class ShoppingListUiEvent {
     data object AddShoppingList : ShoppingListUiEvent()
     data object CloseAddShoppingListDialog : ShoppingListUiEvent()
     data class ShowShoppingList(val shoppingList: ShoppingList) : ShoppingListUiEvent()
+    data class ShowShoppingListContextMenu(val shoppingList: ShoppingList) : ShoppingListUiEvent()
+    data object CloseShoppingListContextMenu : ShoppingListUiEvent()
+    data class EditShoppingList(val shoppingList: ShoppingList) : ShoppingListUiEvent()
+    data class DeleteShoppingList(val shoppingList: ShoppingList) : ShoppingListUiEvent()
     data class AddShoppingListDialogInteraction(val value: AddShoppingListUiEvent) : ShoppingListUiEvent()
 }
