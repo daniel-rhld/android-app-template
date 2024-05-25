@@ -11,7 +11,9 @@
     <string name="shopping_list_empty_button_label">Create shopping list</string>
 
     <string name="add_shopping_list_title">Add shopping list</string>
-    <string name="add_shopping_list_text_field_name_label">Name</string>
-    <string name="add_shopping_list_button_create_label">Create</string>
+    <string name="edit_shopping_list_title">Edit shopping list</string>
+    <string name="add_edit_shopping_list_text_field_name_label">Name</string>
+    <string name="add_edit_shopping_list_button_create_label">Create</string>
+    <string name="add_edit_shopping_list_button_update_label">Update</string>
 
 </resources>

@@ -9,13 +9,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -48,8 +46,8 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import de.danielreinhold.shoppinglist.R
 import de.danielreinhold.shoppinglist.core.presentation.theme.AppTheme
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingListMockItem
-import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list.AddShoppingListScreen
-import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list.AddShoppingListUiState
+import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_edit_shopping_list.AddEditShoppingListScreen
+import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_edit_shopping_list.AddEditShoppingListUiState
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.shopping_list.components.EmptyShoppingListComponent
 import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.shopping_list.components.ShoppingListComponent
 
@@ -82,11 +80,34 @@ private fun ShoppingListScreen(
             windowInsets = WindowInsets(0.dp),
             containerColor = MaterialTheme.colorScheme.background
         ) {
-            AddShoppingListScreen(
+            AddEditShoppingListScreen(
                 uiState = uiState.addShoppingListUiState,
                 onUiEvent = { event ->
                     onUiEvent.invoke(
                         ShoppingListUiEvent.AddShoppingListDialogInteraction(value = event)
+                    )
+                },
+                modifier = Modifier.padding(all = 16.dp)
+            )
+        }
+    }
+
+    if (uiState.editShoppingListDialogVisible) {
+        ModalBottomSheet(
+            sheetState = rememberModalBottomSheetState(
+                skipPartiallyExpanded = true
+            ),
+            onDismissRequest = {
+                onUiEvent.invoke(ShoppingListUiEvent.CloseEditShoppingListDialog)
+            },
+            windowInsets = WindowInsets(0.dp),
+            containerColor = MaterialTheme.colorScheme.background
+        ) {
+            AddEditShoppingListScreen(
+                uiState = uiState.editShoppingListUiState,
+                onUiEvent = { event ->
+                    onUiEvent.invoke(
+                        ShoppingListUiEvent.EditShoppingListDialogInteraction(value = event)
                     )
                 },
                 modifier = Modifier.padding(all = 16.dp)
@@ -246,7 +267,14 @@ private fun PreviewShoppingListScreen() {
             uiState = ShoppingListUiState(
                 shoppingLists = listOf(ShoppingListMockItem, ShoppingListMockItem),
                 addShoppingListDialogVisible = false,
-                addShoppingListUiState = AddShoppingListUiState(
+                addShoppingListUiState = AddEditShoppingListUiState(
+                    shoppingListId = null,
+                    shoppingListName = "",
+                    buttonSaveEnabled = false
+                ),
+                editShoppingListDialogVisible = false,
+                editShoppingListUiState = AddEditShoppingListUiState(
+                    shoppingListId = null,
                     shoppingListName = "",
                     buttonSaveEnabled = false
                 ),
@@ -265,7 +293,14 @@ private fun PreviewEmptyShoppingListScreen() {
             uiState = ShoppingListUiState(
                 shoppingLists = listOf(),
                 addShoppingListDialogVisible = false,
-                addShoppingListUiState = AddShoppingListUiState(
+                addShoppingListUiState = AddEditShoppingListUiState(
+                    shoppingListId = null,
+                    shoppingListName = "",
+                    buttonSaveEnabled = false
+                ),
+                editShoppingListDialogVisible = false,
+                editShoppingListUiState = AddEditShoppingListUiState(
+                    shoppingListId = null,
                     shoppingListName = "",
                     buttonSaveEnabled = false
                 ),

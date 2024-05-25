@@ -1,4 +1,4 @@
-package de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_shopping_list
+package de.danielreinhold.shoppinglist.feature.shopping_list.presentation.add_edit_shopping_list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,16 +24,21 @@ import de.danielreinhold.shoppinglist.R
 import de.danielreinhold.shoppinglist.core.presentation.theme.AppTheme
 
 @Composable
-fun AddShoppingListScreen(
-    uiState: AddShoppingListUiState,
-    onUiEvent: (AddShoppingListUiEvent) -> Unit,
+fun AddEditShoppingListScreen(
+    uiState: AddEditShoppingListUiState,
+    onUiEvent: (AddEditShoppingListUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
     ) {
         Text(
-            text = stringResource(id = R.string.add_shopping_list_title),
+            text = stringResource(
+                id = if (uiState.shoppingListId == null)
+                    R.string.add_shopping_list_title
+                else
+                    R.string.edit_shopping_list_title
+            ),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,
@@ -46,11 +51,11 @@ fun AddShoppingListScreen(
             value = uiState.shoppingListName,
             onValueChange = { value ->
                 onUiEvent.invoke(
-                    AddShoppingListUiEvent.ShoppingListNameChange(value = value)
+                    AddEditShoppingListUiEvent.ShoppingListNameChange(value = value)
                 )
             },
             label = {
-                Text(text = stringResource(id = R.string.add_shopping_list_text_field_name_label))
+                Text(text = stringResource(id = R.string.add_edit_shopping_list_text_field_name_label))
             },
             shape = RoundedCornerShape(
                 size = 8.dp
@@ -66,12 +71,17 @@ fun AddShoppingListScreen(
         ) {
             Button(
                 onClick = {
-                    onUiEvent.invoke(AddShoppingListUiEvent.ButtonSaveClick)
+                    onUiEvent.invoke(AddEditShoppingListUiEvent.ButtonSaveClick)
                 },
                 enabled = uiState.buttonSaveEnabled
             ) {
                 Text(
-                    text = stringResource(id = R.string.add_shopping_list_button_create_label)
+                    text = stringResource(
+                        id = if (uiState.shoppingListId == null)
+                            R.string.add_edit_shopping_list_button_create_label
+                        else
+                            R.string.add_edit_shopping_list_button_update_label
+                    )
                 )
             }
         }
@@ -82,8 +92,9 @@ fun AddShoppingListScreen(
 @Composable
 private fun PreviewAddShoppingListScreen() {
     AppTheme {
-        AddShoppingListScreen(
-            uiState = AddShoppingListUiState(
+        AddEditShoppingListScreen(
+            uiState = AddEditShoppingListUiState(
+                shoppingListId = null,
                 shoppingListName = "Test",
                 buttonSaveEnabled = true
             ),

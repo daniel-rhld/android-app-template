@@ -11,6 +11,7 @@ import de.danielreinhold.shoppinglist.feature.shopping_list.domain.repositories.
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases.CreateShoppingListUseCase
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases.DeleteShoppingListUseCase
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases.GetShoppingListsUseCase
+import de.danielreinhold.shoppinglist.feature.shopping_list.domain.use_cases.UpdateShoppingListUseCase
 import javax.inject.Singleton
 
 @Module
@@ -33,6 +34,13 @@ object ShoppingListModule {
     fun provideCreateShoppingListUseCase(
         shoppingListRepository: ShoppingListRepository
     ) = CreateShoppingListUseCase(
+        shoppingListRepository = shoppingListRepository
+    )
+
+    @Provides
+    fun provideUpdateShoppingListUseCase(
+        shoppingListRepository: ShoppingListRepository
+    ) = UpdateShoppingListUseCase(
         shoppingListRepository = shoppingListRepository
     )
 
