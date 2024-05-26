@@ -1,6 +1,6 @@
 package de.danielreinhold.shoppinglist.feature.shopping_list.domain.validator
 
-import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.ShoppingListEntity
+import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.shopping_list.ShoppingListEntity
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingListNameMissingException
 
 object ShoppingListValidator {

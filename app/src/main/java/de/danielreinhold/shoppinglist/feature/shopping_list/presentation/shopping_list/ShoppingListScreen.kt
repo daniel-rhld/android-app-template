@@ -43,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.ShoppingListDetailScreenDestination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import de.danielreinhold.shoppinglist.R
 import de.danielreinhold.shoppinglist.core.presentation.theme.AppTheme
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingListMockItem
@@ -54,13 +56,26 @@ import de.danielreinhold.shoppinglist.feature.shopping_list.presentation.shoppin
 
 @Destination<RootGraph>(start = true)
 @Composable
-fun ShoppingListScreen() {
+fun ShoppingListScreen(
+    navigator: DestinationsNavigator
+) {
     val viewModel: ShoppingListViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
 
     ShoppingListScreen(
         uiState = uiState,
-        onUiEvent = viewModel::onUiEvent
+        onUiEvent = { event ->
+            when (event) {
+                is ShoppingListUiEvent.ShowShoppingList -> {
+                    navigator.navigate(
+                        ShoppingListDetailScreenDestination(
+                            shoppingListId = event.shoppingList.id
+                        )
+                    )
+                }
+                else -> viewModel.onUiEvent(event)
+            }
+        }
     )
 }
 

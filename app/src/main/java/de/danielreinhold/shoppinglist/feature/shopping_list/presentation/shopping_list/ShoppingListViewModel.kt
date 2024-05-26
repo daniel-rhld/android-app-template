@@ -255,9 +255,7 @@ class ShoppingListViewModel @Inject constructor(
 
             // </editor-fold>
 
-            is ShoppingListUiEvent.ShowShoppingList -> {
-
-            }
+            else -> Unit
         }
     }
 

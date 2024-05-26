@@ -1,9 +1,10 @@
 package de.danielreinhold.shoppinglist.feature.shopping_list.domain.repositories
 
 import de.danielreinhold.shoppinglist.feature.shopping_list.data.daos.ShoppingListDao
-import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.ShoppingListEntity
-import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.ShoppingListItemEntity
-import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.mapToDomainModel
+import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.shopping_list.ShoppingListEntity
+import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.shopping_list.mapToDomainObject
+import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.shopping_list_item.ShoppingListItemEntity
+import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.shopping_list_item.mapToDomainObject
 import de.danielreinhold.shoppinglist.feature.shopping_list.domain.models.ShoppingList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -13,22 +14,12 @@ class ShoppingListRepositoryImpl(
 ) : ShoppingListRepository {
     override val shoppingLists: Flow<List<ShoppingList>>
         get() = shoppingListDao.getAllShoppingListsAsFlow().map {
-            it.map {  view ->
-                view.shoppingList.mapToDomainModel(
-                    shoppingListItemProvider = {
-                        view.shoppingListItems.map(ShoppingListItemEntity::mapToDomainModel)
-                    }
-                )
-            }
+            it.map { view -> view.mapToDomainObject() }
         }
 
-    override suspend fun findShoppingList(id: Int): ShoppingList? {
-        return shoppingListDao.findShoppingList(id)?.let { view ->
-            view.shoppingList.mapToDomainModel(
-                shoppingListItemProvider = {
-                    view.shoppingListItems.map(ShoppingListItemEntity::mapToDomainModel)
-                }
-            )
+    override fun findShoppingListAsFlow(id: Int): Flow<ShoppingList?> {
+        return shoppingListDao.findShoppingListAsFlow(id).let { flow ->
+            flow.map { view -> view?.mapToDomainObject() }
         }
     }
 

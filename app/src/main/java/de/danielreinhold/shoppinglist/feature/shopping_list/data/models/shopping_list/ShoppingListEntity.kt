@@ -1,4 +1,4 @@
-package de.danielreinhold.shoppinglist.feature.shopping_list.data.models
+package de.danielreinhold.shoppinglist.feature.shopping_list.data.models.shopping_list
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -14,10 +14,4 @@ data class ShoppingListEntity(
 
     @ColumnInfo(name = "name")
     val name: String
-)
-
-fun ShoppingListEntity.mapToDomainModel(shoppingListItemProvider: () -> List<ShoppingListItem>) = ShoppingList(
-    id = id,
-    name = name,
-    items = shoppingListItemProvider.invoke()
 )

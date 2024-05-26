@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
-import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.ShoppingListEntity
-import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.ShoppingListView
+import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.shopping_list.ShoppingListEntity
+import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.shopping_list.ShoppingListView
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,7 +15,7 @@ interface ShoppingListDao {
     fun getAllShoppingListsAsFlow(): Flow<List<ShoppingListView>>
 
     @Query("SELECT * FROM shopping_lists WHERE id = :id LIMIT 1")
-    suspend fun findShoppingList(id: Int): ShoppingListView?
+    fun findShoppingListAsFlow(id: Int): Flow<ShoppingListView?>
 
     @Upsert
     suspend fun upsertShoppingList(value: ShoppingListEntity)

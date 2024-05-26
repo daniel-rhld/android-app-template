@@ -68,6 +68,8 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui.material)
     implementation(libs.androidx.ui.material3)
+    implementation(libs.androidx.ui.icons.core)
+    implementation(libs.androidx.ui.icons.extended)
     implementation(libs.androidx.ui.core)
     implementation(libs.androidx.ui.core)
     implementation(libs.androidx.ui.graphics)

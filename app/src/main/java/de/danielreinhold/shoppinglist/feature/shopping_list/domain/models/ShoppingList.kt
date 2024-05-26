@@ -1,6 +1,6 @@
 package de.danielreinhold.shoppinglist.feature.shopping_list.domain.models
 
-import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.ShoppingListEntity
+import de.danielreinhold.shoppinglist.feature.shopping_list.data.models.shopping_list.ShoppingListEntity
 
 data class ShoppingList(
     val id: Int,
@@ -8,7 +8,7 @@ data class ShoppingList(
     val items: List<ShoppingListItem>
 )
 
-fun ShoppingList.toEntity() = ShoppingListEntity(
+fun ShoppingList.mapToEntity() = ShoppingListEntity(
     id = id,
     name = name
 )
@@ -16,5 +16,5 @@ fun ShoppingList.toEntity() = ShoppingListEntity(
 val ShoppingListMockItem = ShoppingList(
     id = 1,
     name = "Shopping List 1",
-    items = listOf( ShoppingListItemMock, ShoppingListItemMock )
+    items = listOf( ShoppingListItemMockItem, ShoppingListItemMockItem )
 )
