@@ -5,3 +5,9 @@ class ShoppingListItemTemplate(
     val name: String,
     val unit: ShoppingListItemUnit
 )
+
+val ShoppingListItemTemplateMockItem = ShoppingListItemTemplate(
+    id = 1,
+    name = "Cola",
+    unit = ShoppingListItemUnitMockItem
+)

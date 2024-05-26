@@ -19,6 +19,8 @@
     <string name="delete_shopping_list_confirmation_dialog_title">Delete shopping list</string>
     <string name="delete_shopping_list_confirmation_dialog_text">Do you really want to delete this shopping list? It cannot be restored.</string>
 
+    <string name="shopping_list_detail_search_bar_hint">Search</string>
+
     <string name="confirmation_dialog_ok">Ok</string>
     <string name="confirmation_dialog_cancel">Cancel</string>
 </resources>

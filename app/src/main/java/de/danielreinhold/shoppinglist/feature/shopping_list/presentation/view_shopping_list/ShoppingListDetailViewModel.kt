@@ -23,7 +23,10 @@ class ShoppingListDetailViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(
         ShoppingListDetailUiState(
-            shoppingList = ShoppingList(id = 0, name = "", items = listOf())
+            shoppingList = ShoppingList(id = 0, name = "", items = listOf()),
+            searchBarVisible = false,
+            searchValue = "",
+            searchResults = listOf()
         )
     )
     val uiState = _uiState.asStateFlow()
