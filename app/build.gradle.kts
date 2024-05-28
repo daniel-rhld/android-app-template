@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "de.danielreinhold.shoppinglist"
+    namespace = "de.template"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "de.danielreinhold.shoppinglist"
+        applicationId = "de.template"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

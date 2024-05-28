@@ -1,26 +1,3 @@
 <resources>
-    <string name="app_name">ShoppingList</string>
-
-    <plurals name="shopping_list_component_label_item_count">
-        <item quantity="one">1 item</item>
-        <item quantity="other">%1$d items</item>
-    </plurals>
-
-    <string name="shopping_list_toolbar_title">Shopping lists</string>
-    <string name="shopping_list_empty_label">You haven\'t created any shopping lists yet</string>
-    <string name="shopping_list_empty_button_label">Create shopping list</string>
-
-    <string name="add_shopping_list_title">Add shopping list</string>
-    <string name="edit_shopping_list_title">Edit shopping list</string>
-    <string name="add_edit_shopping_list_text_field_name_label">Name</string>
-    <string name="add_edit_shopping_list_button_create_label">Create</string>
-    <string name="add_edit_shopping_list_button_update_label">Update</string>
-
-    <string name="delete_shopping_list_confirmation_dialog_title">Delete shopping list</string>
-    <string name="delete_shopping_list_confirmation_dialog_text">Do you really want to delete this shopping list? It cannot be restored.</string>
-
-    <string name="shopping_list_detail_search_bar_hint">Search</string>
-
-    <string name="confirmation_dialog_ok">Ok</string>
-    <string name="confirmation_dialog_cancel">Cancel</string>
+    <string name="app_name">Template</string>
 </resources>
